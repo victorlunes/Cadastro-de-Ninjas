@@ -1,0 +1,44 @@
+package com.Java10X.CadastroDeNinjas;
+
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "tb_cadastro")
+public class NinjaModel {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long id;
+    String nome;
+    String email;
+    int idade;
+
+    public NinjaModel(String nome, String email, int idade) {}
+
+    public NinjaModel() {}
+
+    public String getNome() {
+        return nome;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public int getIdade() {
+        return idade;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setIdade(int idade) {
+        this.idade = idade;
+    }
+
+}
