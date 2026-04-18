@@ -29,6 +29,9 @@ public class NinjaModel {
     private String email;
     private int idade;
 
+
+    @Column(name="img_url")
+    private String imgUrl;
     //@ManyToOne um ninja tem uma unica missão
     @ManyToOne
     @JoinColumn(name = "missoes_id") //chave estrangeira
