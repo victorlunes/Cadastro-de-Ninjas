@@ -19,3 +19,10 @@ spring:
       ddl-auto: update
       show-sql: true
       console.enabled: true
+
+  # Configurações do Flyway
+
+  flyway:
+    enabled: true
+    locations: classpath:db/migrations
+    baseline-on-migrate: true
