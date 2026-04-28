@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.Java10X.CadastroDeNinjas.Ninjas.NinjaModel;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -30,5 +31,6 @@ public class MissoesModel {
 
     //@OneToMany Uma missão pode ter varios ninjas
     @OneToMany(mappedBy= "missoes")
+    @JsonIgnore
     private List<NinjaModel> ninja;
 }
