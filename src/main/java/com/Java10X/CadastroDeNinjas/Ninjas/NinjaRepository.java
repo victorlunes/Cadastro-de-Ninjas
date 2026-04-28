@@ -1,4 +1,5 @@
 package com.Java10X.CadastroDeNinjas.Ninjas;
 
-public class NinjaRepository {
-}
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface NinjaRepository extends JpaRepository<NinjaModel, Long> {}
