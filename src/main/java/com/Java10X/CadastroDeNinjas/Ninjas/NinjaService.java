@@ -26,4 +26,26 @@ public class NinjaService {
     public void criarNinja(NinjaModel ninja) {
         _ninjaRepository.save(ninja);
     }
+
+    public void deletarNinjaPorId(long id){
+        _ninjaRepository.deleteById(id);
+    }
+
+    public NinjaModel atualizarNinja(NinjaModel ninja){
+        NinjaModel ninjaExiste = bucarNinjaId(ninja.getId());
+
+        if(ninjaExiste == null) {
+            return null;
+        }
+
+        ninjaExiste.setNome(ninja.getNome());
+        ninjaExiste.setEmail(ninja.getEmail());
+        ninjaExiste.setIdade(ninja.getIdade());
+        ninjaExiste.setRank(ninja.getRank());
+        ninjaExiste.setImgUrl(ninja.getImgUrl());
+        ninjaExiste.setMissoes(ninja.getMissoes());
+
+        _ninjaRepository.save(ninjaExiste);
+        return ninjaExiste;
+    }
 }
