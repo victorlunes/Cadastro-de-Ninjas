@@ -16,13 +16,16 @@ public class NinjaService {
         this._ninjaMapper = ninjaMapper;
     }
 
-    public List<NinjaModel> listarNinjas() {
-        return _ninjaRepository.findAll();
+    public List<NinjaDTO> listarNinjas() {
+        List<NinjaModel> ninjas = _ninjaRepository.findAll();
+        return ninjas.stream()
+                .map(ninja -> _ninjaMapper.map(ninja))
+                .toList();
     }
 
-    public NinjaModel bucarNinjaId(long id){
-        Optional<NinjaModel> ninja = _ninjaRepository.findById(id);
-        return ninja.orElse(null);
+    public NinjaDTO bucarNinjaId(long id){
+        Optional<NinjaModel> ninjaPorId = _ninjaRepository.findById(id);
+        return ninjaPorId.map(ninja -> _ninjaMapper.map(ninja)).orElse(null);
     }
 
     public void criarNinja(NinjaDTO ninjaDTO) {
@@ -34,21 +37,18 @@ public class NinjaService {
         _ninjaRepository.deleteById(id);
     }
 
-    public NinjaModel atualizarNinja(NinjaModel ninja){
-        NinjaModel ninjaExiste = bucarNinjaId(ninja.getId());
+    public NinjaDTO atualizarNinja(NinjaDTO ninjaDTO, Long id){
+        Optional<NinjaModel> ninjaExistente = _ninjaRepository.findById(id);
 
-        if(ninjaExiste == null) {
-            return null;
+        if (ninjaExistente.isPresent()) {
+            NinjaModel ninjaAtualizado = _ninjaMapper.map(ninjaDTO);
+            ninjaAtualizado.setId(id);
+
+            NinjaModel ninjaSalvo = _ninjaRepository.save(ninjaAtualizado);
+
+            return _ninjaMapper.map(ninjaSalvo);
         }
 
-        ninjaExiste.setNome(ninja.getNome());
-        ninjaExiste.setEmail(ninja.getEmail());
-        ninjaExiste.setIdade(ninja.getIdade());
-        ninjaExiste.setRank(ninja.getRank());
-        ninjaExiste.setImgUrl(ninja.getImgUrl());
-        ninjaExiste.setMissoes(ninja.getMissoes());
-
-        _ninjaRepository.save(ninjaExiste);
-        return ninjaExiste;
+        return null;
     }
 }
