@@ -9,9 +9,11 @@ import org.springframework.stereotype.Service;
 public class NinjaService {
 
     private NinjaRepository _ninjaRepository;
+    private NinjaMapper _ninjaMapper;
 
-    public NinjaService(NinjaRepository ninjaRepository) {
+    public NinjaService(NinjaRepository ninjaRepository, NinjaMapper ninjaMapper) {
         this._ninjaRepository = ninjaRepository;
+        this._ninjaMapper = ninjaMapper;
     }
 
     public List<NinjaModel> listarNinjas() {
@@ -23,7 +25,8 @@ public class NinjaService {
         return ninja.orElse(null);
     }
 
-    public void criarNinja(NinjaModel ninja) {
+    public void criarNinja(NinjaDTO ninjaDTO) {
+        NinjaModel ninja = _ninjaMapper.map(ninjaDTO);
         _ninjaRepository.save(ninja);
     }
 
